@@ -9,8 +9,8 @@ jobs:
   push-to-ghcr:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: read  # Read access to the code
+      packages: write  # Write access to GHCR
     steps:
       - name: 'Checkout Github Actions'
         uses: actions/checkout@v2
@@ -22,8 +22,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Build and Push the image'
         run: |
-          docker build . --tag ghcr.io/${{ github.repository_owner }}/codecoverage:v1  # Build the new image
-          docker push ghcr.io/${{ github.repository_owner }}/codecoverage:v1  # Push the new image to GHCR
+          docker build . --tag ghcr.io/${{ github.repository_owner }}/hello:latest
+          docker push ghcr.io/${{ github.repository_owner }}/hello:latest
 
   DemoSonarCloudScan:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
 
       - name: 'Pull the newly built image'
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/codecoverage:v1  # Pull the newly built image
+          docker pull ghcr.io/${{ github.repository_owner }}/hello:latest
 
       # Set up Python, install dependencies, and run tests
       - name: 'Set up Python'
@@ -54,11 +54,12 @@ jobs:
       - name: 'Install dependencies'
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov  # Install pytest and coverage tools
+          pip install pytest pytest-cov
 
       - name: 'Run tests and generate coverage report'
         run: |
-          pytest --cov=./ --cov-report=xml:coverage.xml  # Run tests and generate coverage report in XML format
+          pytest tests/ --cov=./ --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
+          ls -al coverage.xml  # Debugging step: Check if coverage.xml exists
 
       - name: 'SonarCloud Scan'
         uses: sonarsource/sonarcloud-github-action@master
