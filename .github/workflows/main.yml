@@ -56,9 +56,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-cov
 
+      - name: 'Set PYTHONPATH'
+        run: |
+          export PYTHONPATH=$(pwd)/Sourcecode  # Set PYTHONPATH to Sourcecode directory
+
       - name: 'Run tests and generate coverage report'
         run: |
-          pytest tests/ --cov=sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
+          pytest tests/ --cov=Sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
           ls -al coverage.xml  # Debugging step: Check if coverage.xml exists
 
       - name: 'SonarCloud Scan'
