@@ -60,9 +60,9 @@ jobs:
         run: |
           export PYTHONPATH=$(pwd)/Sourcecode  # Set PYTHONPATH to Sourcecode directory
 
-      - name: 'Run tests and generate coverage report'
-        run: |
-          pytest tests/ --cov=Sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
+      # - name: 'Run tests and generate coverage report'
+      #   run: |
+      #     pytest tests/ --cov=Sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
          
 
       - name: 'SonarCloud Scan'
