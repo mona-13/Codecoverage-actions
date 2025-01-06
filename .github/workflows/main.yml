@@ -63,7 +63,7 @@ jobs:
       - name: 'Run tests and generate coverage report'
         run: |
           pytest tests/ --cov=Sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
-          ls -al coverage.xml  # Debugging step: Check if coverage.xml exists
+         
 
       - name: 'SonarCloud Scan'
         uses: sonarsource/sonarcloud-github-action@master
