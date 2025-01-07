@@ -3,10 +3,10 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
-    versioning-strategy: "increase"
+      interval: "weekly"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "daily"
-    versioning-strategy: "increase"
+      interval: "weekly"
+    versioning-strategy: "auto"
+
