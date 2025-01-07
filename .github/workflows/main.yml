@@ -45,26 +45,29 @@ jobs:
         run: |
           docker pull ghcr.io/${{ github.repository_owner }}/code:v2
 
-      # Set up Python, install dependencies, and run tests
+      # Set up Python
       - name: 'Set up Python'
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
+      # Install dependencies
       - name: 'Install dependencies'
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov
+          pip install -r requirements.txt  # Install dependencies from requirements.txt
 
-      - name: 'Set PYTHONPATH'
+      # Install Tox
+      - name: 'Install Tox'
         run: |
-          export PYTHONPATH=$(pwd)/Sourcecode  # Set PYTHONPATH to Sourcecode directory
+          pip install tox
 
-      - name: 'Run tests and generate coverage report'
+      # Run Tox, which runs tests and generates coverage report
+      - name: 'Run Tox Tests and Coverage'
         run: |
-          pytest tests/ --cov=Sourcecode --cov-report=xml:coverage.xml --maxfail=1 --disable-warnings  # Ensure proper test discovery
-         
+          tox --parallel  # Run tests in parallel across environments (e.g., Python 3.8, 3.9)
 
+      # SonarCloud Scan
       - name: 'SonarCloud Scan'
         uses: sonarsource/sonarcloud-github-action@master
         env:
