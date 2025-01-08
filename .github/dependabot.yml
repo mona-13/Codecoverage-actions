@@ -4,9 +4,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    versioning-strategy: "increase"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
-    versioning-strategy: "auto"
+    versioning-strategy: "increase"
 
