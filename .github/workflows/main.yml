@@ -2,8 +2,10 @@ name: Deploy Images to GHCR
 
 on:
   push:
+    branches:
+      - 'main'  # Trigger the workflow when pushing to the 'main' branch
     tags:
-      - 'v*'  # Trigger on tags like v1, v2, v3, etc.
+      - 'v*'  # Trigger the workflow on tags like v1, v2, v3, etc.
 
 
 jobs:
