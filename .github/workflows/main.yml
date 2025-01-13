@@ -11,7 +11,7 @@ jobs:
   push-to-ghcr:
     runs-on: ubuntu-latest
     permissions:
-      contents: read  # Read access to the code
+      contents: write  # Read access to the code
       packages: write  # Write access to GHCR
     steps:
       - name: 'Checkout Github Actions'
