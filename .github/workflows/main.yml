@@ -1,9 +1,9 @@
+name: Deploy Images to GHCR
+
 on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'  # Trigger the workflow on tags like v1, v2, v3, etc.
 
 jobs:
   push-to-ghcr:
@@ -22,10 +22,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Build and Push the image'
         run: |
-          # Use the Git tag (like v1, v2, etc.) or branch name for the image version
-          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref }}
-          docker build . --tag $IMAGE_TAG
-          docker push $IMAGE_TAG
+          docker build . --tag ghcr.io/${{ github.repository_owner }}/code:v2
+          docker push ghcr.io/${{ github.repository_owner }}/code:v2
 
   DemoSonarCloudScan:
     runs-on: ubuntu-latest
@@ -45,13 +43,30 @@ jobs:
 
       - name: 'Pull the newly built image'
         run: |
-          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref }}
-          docker pull $IMAGE_TAG
+          docker pull ghcr.io/${{ github.repository_owner }}/code:v2
+
 
       - name: Install and set up python
         uses: mona-13/Compositeactions-demo@main
+        
 
-      # Install Tox and Test Dependencies
+
+
+          
+
+      # # Set up Python
+      # - name: 'Set up Python'
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.x'
+
+      # # Install dependencies
+      # - name: 'Install dependencies'
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r requirements.txt  # Install dependencies from requirements.txt
+
+      # Install Tox
       - name: 'Install Tox and Test Dependencies'
         run: |
           pip install tox  # Ensure Tox is installed
