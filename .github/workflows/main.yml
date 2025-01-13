@@ -33,7 +33,7 @@ jobs:
 
       - name: 'Call External API'
         run: |
-          curl -X POST https://monaapi.example.com/deploy \
+          curl -X POST http://monaapi.example.com/deploy \
             -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
             -d '{"image_tag": "${{ env.IMAGE_TAG }}", "repository": "${{ github.repository }}"}'
         env:
