@@ -54,11 +54,18 @@ jobs:
 
       - name: 'Commit and push updated version'
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add version.txt
-          git commit -m "Bump version to ${{ steps.increment_version.outputs.new_version }}"
-          git push
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            
+            # Pull the latest changes from the remote main branch
+            git pull origin main --rebase
+        
+            # Now that the branch is up to date, push the changes
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+            git add version.txt
+            git commit -m "Bump version to ${{ steps.increment_version.outputs.new_version }}"
+            git push
+
 
   DemoSonarCloudScan:
     runs-on: ubuntu-latest
