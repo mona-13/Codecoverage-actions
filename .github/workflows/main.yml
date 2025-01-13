@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*'  # Trigger on tags like v1, v2, v3, etc.
 
+
 jobs:
   push-to-ghcr:
     runs-on: ubuntu-latest
