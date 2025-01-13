@@ -33,9 +33,10 @@ jobs:
 
       - name: 'Call External API'
         run: |
-          curl -X POST http://monaapi.example.com/deploy \
-            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
-            -d '{"image_tag": "${{ env.IMAGE_TAG }}", "repository": "${{ github.repository }}"}'
+            curl -X POST https://jsonplaceholder.typicode.com/posts \
+            -H "Content-Type: application/json" \
+            -d '{"title": "foo", "body": "bar", "userId": 1}'
+
         env:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}    
 
