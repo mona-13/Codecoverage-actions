@@ -1,13 +1,9 @@
-name: Deploy Images to GHCR
-
 on:
   push:
     branches:
-      - 'main'  # Trigger the workflow when pushing to the 'main' branch
+      - main
     tags:
       - 'v*'  # Trigger the workflow on tags like v1, v2, v3, etc.
-      
-
 
 jobs:
   push-to-ghcr:
@@ -26,8 +22,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Build and Push the image'
         run: |
-          # Use the Git tag (like v1, v2, etc.) as the version for the image
-          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref_name }}
+          # Use the Git tag (like v1, v2, etc.) or branch name for the image version
+          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref }}
           docker build . --tag $IMAGE_TAG
           docker push $IMAGE_TAG
 
@@ -49,7 +45,7 @@ jobs:
 
       - name: 'Pull the newly built image'
         run: |
-          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref_name }}
+          IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/code:${{ github.ref }}
           docker pull $IMAGE_TAG
 
       - name: Install and set up python
