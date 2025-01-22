@@ -31,14 +31,14 @@ jobs:
           docker build . --tag ${{ env.IMAGE_TAG }}
           docker push ${{ env.IMAGE_TAG }}
 
-      - name: 'Call External API'
-        run: |
-            curl -X POST https://jsonplaceholder.typicode.com/posts \
-            -H "Content-Type: application/json" \
-            -d '{"title": "foo", "body": "bar", "userId": 1}'
+      # - name: 'Call External API'
+      #   run: |
+      #       curl -X POST https://jsonplaceholder.typicode.com/posts \
+      #       -H "Content-Type: application/json" \
+      #       -d '{"title": "foo", "body": "bar", "userId": 1}'
 
-        env:
-          IMAGE_TAG: ${{ env.IMAGE_TAG }}    
+      #   env:
+      #     IMAGE_TAG: ${{ env.IMAGE_TAG }}    
 
   DemoSonarCloudScan:
     runs-on: ubuntu-latest
