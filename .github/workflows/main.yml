@@ -112,3 +112,4 @@ jobs:
             -Dsonar.organization=mona-13
             -Dsonar.projectKey=mona-13
             -Dsonar.python.coverage.reportPaths=coverage.xml  # Path to the coverage file
+            
